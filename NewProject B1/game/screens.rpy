@@ -76,6 +76,9 @@ style frame:
     background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
 
+transform fade_in:
+    alpha 0.0
+    linear 0.4 alpha 1.0
 
 ################################################################################
 ## Внутриигровые экраны
@@ -299,17 +302,11 @@ screen navigation():
 
 
     #    if main_menu:
-
     #        textbutton _("Начать") action Start()
-
     #    else:
-
     #        textbutton _("История") action ShowMenu("history")
-
     #        textbutton _("Сохранить") action ShowMenu("save")
-
     #    textbutton _("Загрузить") action ShowMenu("load")
-
     #    textbutton _("Настройки") action ShowMenu("preferences")
 
         if _in_replay:
@@ -360,13 +357,10 @@ style navigation_button_text:
 
 screen action_overlay(next_action, anim_img, duration=1.0):
     modal True
-    add "#000000cc"                     # затемнение
-
-    # Показываем переданную покадровую анимацию
+    add "#000000cc"
     add anim_img:
         xalign 0.5 yalign 0.5
 
-    # Таймер скрывает оверлей и выполняет исходное действие
     timer duration action [Hide("action_overlay"), next_action]
 
 screen main_menu():
@@ -485,9 +479,10 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0,):
     style_prefix "game_menu"
 
     if main_menu:
-        add gui.main_menu_background
+        add gui.main_menu_background at fade_in
     else:
         add gui.game_menu_background
+
 
     frame:
         style "game_menu_outer_frame"
@@ -539,17 +534,22 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0,):
                     transclude
 
     use navigation
+    
+    label title:
+        xoffset 1100
+        yoffset 70
 
-    textbutton _("Вернуться") action Show("action_overlay",
-        next_action=ShowMenu("main_menu"),   # возврат в главное меню
-        anim_img="anim_back_frames",
-        duration=0.8
-    )
-
-    label title xalign 0.5
-
-    if main_menu:
-        key "game_menu" action ShowMenu("main_menu")
+    if main_menu == True:
+        textbutton _("Вернуться"):
+            yalign 1.0
+            xalign 0.0
+            xoffset 450
+            yoffset -110
+            action Show("action_overlay",
+                next_action=ShowMenu("main_menu"),   # возврат в главное меню
+                anim_img="anim_back_frames",
+                duration=0.8
+        )
 
 
 style game_menu_outer_frame is empty
@@ -681,7 +681,9 @@ screen file_slots(title):
                 style "page_label"
 
                 key_events True
-                xalign 0.5
+                xalign 0
+                xoffset -120
+                yoffset -65
                 action page_name_value.Toggle()
 
                 input:
@@ -693,9 +695,12 @@ screen file_slots(title):
                 style_prefix "slot"
 
                 xalign 0.5
+                xoffset -180
                 yalign 0.5
+                yoffset -70
 
-                spacing gui.slot_spacing
+                xspacing 200
+                yspacing gui.slot_spacing
 
                 for i in range(gui.file_slot_cols * gui.file_slot_rows):
 
@@ -725,34 +730,42 @@ screen file_slots(title):
 
                 hbox:
                     xalign 0.5
+                    xoffset -500
+                    yoffset -100
 
                     spacing gui.page_spacing
 
-                    textbutton _("<") action FilePagePrevious()
+                    textbutton _("<") style "page_button" action FilePagePrevious()
                     key "save_page_prev" action FilePagePrevious()
 
                     if config.has_autosave:
-                        textbutton _("{#auto_page}А") action FilePage("auto")
+                        textbutton _("А") style "page_button" action FilePage("auto")
 
                     if config.has_quicksave:
-                        textbutton _("{#quick_page}Б") action FilePage("quick")
+                        textbutton _("Б") style "page_button" action FilePage("quick")
 
-                    ## range(1, 10) задаёт диапазон значений от 1 до 9.
-                    for page in range(1, 10):
-                        textbutton "[page]" action FilePage(page)
-
-                    textbutton _(">") action FilePageNext()
+                    ## range(1, 5) задаёт диапазон значений от 1 до 4.
+                    for page in range(1, 5):
+                        textbutton "[page]" style "page_button" action FilePage(page)
+                    
+                    textbutton _(">") style "page_button" action FilePageNext()
                     key "save_page_next" action FilePageNext()
 
                 if config.has_sync:
                     if CurrentScreenName() == "save":
                         textbutton _("Загрузить Sync"):
                             action UploadSync()
-                            xalign 0.5
+                            xalign 0.9
+                            yoffset -65
+                            xoffset 220
+
                     else:
                         textbutton _("Скачать Sync"):
                             action DownloadSync()
-                            xalign 0.5
+                            xalign 0.9
+                            yoffset -65
+                            xoffset 220
+
 
 
 style page_label is gui_label
@@ -777,9 +790,12 @@ style page_label_text:
 
 style page_button:
     properties gui.button_properties("page_button")
+    xalign 0.5
 
 style page_button_text:
     properties gui.text_properties("page_button")
+    xalign 0.5
+    textalign 0.5
 
 style slot_button:
     properties gui.button_properties("slot_button")
@@ -797,13 +813,13 @@ style slot_button_text:
 screen preferences():
 
     tag menu
-
     use game_menu(_("Настройки"), scroll="viewport"):
 
         vbox:
 
             hbox:
                 box_wrap True
+                xoffset 0
 
                 if renpy.variant("pc") or renpy.variant("web"):
 
@@ -814,6 +830,7 @@ screen preferences():
                         textbutton _("Полный") action Preference("display", "fullscreen")
 
                 vbox:
+                    xoffset -130
                     style_prefix "check"
                     label _("Пропуск")
                     textbutton _("Всего текста") action Preference("skip", "toggle")
@@ -823,13 +840,16 @@ screen preferences():
                 ## Дополнительные vbox'ы типа "radio_pref" или "check_pref"
                 ## могут быть добавлены сюда для добавления новых настроек.
 
-            null height (4 * gui.pref_spacing)
+            null height (2 * gui.pref_spacing)
 
             hbox:
                 style_prefix "slider"
                 box_wrap True
+                xalign 0.0
+
 
                 vbox:
+                    xsize 260
 
                     label _("Скорость текста")
 
@@ -840,7 +860,9 @@ screen preferences():
                     bar value Preference("auto-forward time")
 
                 vbox:
-
+                    xsize 360
+                    xoffset 150
+                    yoffset -200
                     if config.has_music:
                         label _("Громкость музыки")
 
@@ -926,7 +948,7 @@ style check_button_text:
     properties gui.text_properties("check_button")
 
 style slider_slider:
-    xsize 525
+    xsize 425
 
 style slider_button:
     properties gui.button_properties("slider_button")
@@ -1038,7 +1060,6 @@ style history_label_text:
 ## помощь.
 
 screen help():
-
     tag menu
 
     default device = "keyboard"

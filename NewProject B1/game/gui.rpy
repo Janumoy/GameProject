@@ -77,7 +77,7 @@ define gui.name_text_size = 45
 define gui.interface_text_size = 33
 
 ## Размер заголовков в пользовательском интерфейсе.
-define gui.label_text_size = 36
+define gui.label_text_size = 55
 
 ## Размер текста на экране уведомлений.
 define gui.notify_text_size = 24
@@ -242,7 +242,7 @@ define config.thumbnail_width = 384
 define config.thumbnail_height = 216
 
 ## Количество колонок и рядов в таблице слотов.
-define gui.file_slot_cols = 3
+define gui.file_slot_cols = 2
 define gui.file_slot_rows = 2
 
 
@@ -277,7 +277,7 @@ define gui.pref_button_spacing = 0
 define gui.page_spacing = 0
 
 ## Интервал между слотами.
-define gui.slot_spacing = 15
+define gui.slot_spacing = 0
 
 ## Позиция текста главного меню.
 define gui.main_menu_text_xalign = 1.0
