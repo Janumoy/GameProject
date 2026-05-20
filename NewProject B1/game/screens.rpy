@@ -249,14 +249,14 @@ screen quick_menu():
             style_prefix "quick"
             style "quick_menu"
 
-            textbutton _("Назад") action Rollback()
-            textbutton _("История") action ShowMenu('history')
-            textbutton _("Пропуск") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Авто") action Preference("auto-forward", "toggle")
-            textbutton _("Сохранить") action ShowMenu('save')
-            textbutton _("Б.Сохр") action QuickSave()
-            textbutton _("Б.Загр") action QuickLoad()
-            textbutton _("Опции") action ShowMenu('preferences')
+            #textbutton _("Назад") action Rollback()
+            #textbutton _("История") action ShowMenu('history')
+            #textbutton _("Пропуск") action Skip() alternate Skip(fast=True, confirm=True)
+            #textbutton _("Авто") action Preference("auto-forward", "toggle")
+            #textbutton _("Сохранить") action ShowMenu('save')
+            #textbutton _("Б.Сохр") action QuickSave()
+            #textbutton _("Б.Загр") action QuickLoad()
+            #textbutton _("Опции") action ShowMenu('preferences')
 
 
 ## Данный код гарантирует, что экран быстрого меню будет показан в игре в любое
@@ -315,7 +315,7 @@ screen navigation():
 
         elif not main_menu:
 
-            textbutton _("История") action ShowMenu("history")
+            #textbutton _("История") action ShowMenu("history")
             textbutton _("Сохранить") action ShowMenu("save")
             textbutton _("Загрузить") action ShowMenu("load")
             textbutton _("Настройки") action ShowMenu("preferences")
@@ -552,6 +552,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0,):
         )
 
 
+
 style game_menu_outer_frame is empty
 style game_menu_navigation_frame is empty
 style game_menu_content_frame is empty
@@ -630,7 +631,7 @@ screen about():
             if gui.about:
                 text "[gui.about!t]\n"
 
-            text _("Сделано с помощью {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
+            text _("Сделано с помощью\n {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].")
 
 
 style about_label is gui_label
@@ -767,7 +768,6 @@ screen file_slots(title):
                             xoffset 220
 
 
-
 style page_label is gui_label
 style page_label_text is gui_label_text
 style page_button is gui_button
@@ -815,80 +815,82 @@ screen preferences():
     tag menu
     use game_menu(_("Настройки"), scroll="viewport"):
 
-        vbox:
+            vbox:
 
-            hbox:
-                box_wrap True
-                xoffset 0
+                hbox:
+                    box_wrap True
+                    xoffset 0
 
-                if renpy.variant("pc") or renpy.variant("web"):
+                    if renpy.variant("pc") or renpy.variant("web"):
+
+                        vbox:
+                            style_prefix "radio"
+                            label _("Режим экрана")
+                            textbutton _("Оконный") action Preference("display", "window")
+                            textbutton _("Полный") action Preference("display", "fullscreen")
 
                     vbox:
-                        style_prefix "radio"
-                        label _("Режим экрана")
-                        textbutton _("Оконный") action Preference("display", "window")
-                        textbutton _("Полный") action Preference("display", "fullscreen")
+                        xoffset -130
+                        style_prefix "check"
+                        label _("Пропуск")
+                        textbutton _("Всего текста") action Preference("skip", "toggle")
+                        textbutton _("После выборов") action Preference("after choices", "toggle")
+                        textbutton _("Переходов") action InvertSelected(Preference("transitions", "toggle"))
 
-                vbox:
-                    xoffset -130
-                    style_prefix "check"
-                    label _("Пропуск")
-                    textbutton _("Всего текста") action Preference("skip", "toggle")
-                    textbutton _("После выборов") action Preference("after choices", "toggle")
-                    textbutton _("Переходов") action InvertSelected(Preference("transitions", "toggle"))
+                    ## Дополнительные vbox'ы типа "radio_pref" или "check_pref"
+                    ## могут быть добавлены сюда для добавления новых настроек.
 
-                ## Дополнительные vbox'ы типа "radio_pref" или "check_pref"
-                ## могут быть добавлены сюда для добавления новых настроек.
+                null height (2 * gui.pref_spacing)
 
-            null height (2 * gui.pref_spacing)
-
-            hbox:
-                style_prefix "slider"
-                box_wrap True
-                xalign 0.0
+                hbox:
+                    style_prefix "slider"
+                    box_wrap True
+                    xalign 0.0
 
 
-                vbox:
-                    xsize 260
+                    vbox:
+                        xsize 260
 
-                    label _("Скорость текста")
+                        label _("Скорость текста")
 
-                    bar value Preference("text speed")
+                        bar value Preference("text speed")
 
-                    label _("Скорость авточтения")
+                        label _("Скорость авточтения")
 
-                    bar value Preference("auto-forward time")
+                        bar value Preference("auto-forward time")
 
-                vbox:
-                    xsize 360
-                    xoffset 150
-                    yoffset -200
-                    if config.has_music:
-                        label _("Громкость музыки")
+                    vbox:
+                        xsize 360
+                        xoffset 150
+                        yoffset -200
+                        if config.has_music:
+                            label _("Громкость музыки")
 
-                        hbox:
-                            bar value Preference("music volume")
+                            hbox:
+                                bar value Preference("music volume")
 
-                    if config.has_sound:
-                        label _("Громкость звуков")
-                        hbox:
-                            bar value Preference("sound volume")
-                            if test_sounds:
-                                textbutton _("Тест") action Play("sound", renpy.random.choice(test_sounds))
+                        if config.has_sound:
+                            label _("Громкость звуков")
+                            hbox:
+                                bar value Preference("sound volume")
+                                if test_sounds:
+                                    textbutton _("Тест") action Play("sound", renpy.random.choice(test_sounds))
 
-                    if config.has_voice:
-                        label _("Громкость голоса")
-                        hbox:
-                            bar value Preference("voice volume")
-                            if test_voice:
-                                textbutton _("Тест") action Play("voice", renpy.random.choice(test_voice))
+                        if config.has_voice:
+                            label _("Громкость голоса")
+                            hbox:
+                                bar value Preference("voice volume")
+                                if test_voice:
+                                    textbutton _("Тест") action Play("voice", renpy.random.choice(test_voice))
 
-                    if config.has_music or config.has_sound or config.has_voice:
-                        null height gui.pref_spacing
+                        if config.has_music or config.has_sound or config.has_voice:
+                            null height gui.pref_spacing
 
-                        textbutton _("Без звука"):
-                            action Preference("all mute", "toggle")
-                            style "mute_all_button"
+                            textbutton _("Без звука"):
+                                action Preference("all mute", "toggle")
+                                style "mute_all_button"
+
+
 
 
 style pref_label is gui_label
@@ -1072,7 +1074,7 @@ screen help():
             spacing 23
 
             hbox:
-
+                xoffset -10
                 textbutton _("Клавиатура") action SetScreenVariable("device", "keyboard")
                 textbutton _("Мышь") action SetScreenVariable("device", "mouse")
 
@@ -1114,24 +1116,12 @@ screen keyboard_help():
         text _("Включает режим пропуска.")
 
     hbox:
-        label _("Page Up")
-        text _("Откат назад по сюжету игры.")
-
-    hbox:
-        label _("Page Down")
-        text _("Откатывает предыдущее действие вперёд.")
-
-    hbox:
         label "H"
         text _("Скрывает интерфейс пользователя.")
 
     hbox:
         label "S"
         text _("Делает снимок экрана.")
-
-    hbox:
-        label "V"
-        text _("Включает поддерживаемый {a=https://www.renpy.org/l/voicing}синтезатор речи{/a}.")
 
     hbox:
         label "Shift+A"
@@ -1204,15 +1194,18 @@ style help_button_text:
     properties gui.text_properties("help_button")
 
 style help_label:
-    xsize 375
+    xsize 575
     right_padding 30
 
 style help_label_text:
     size gui.text_size
-    xalign 1.0
-    textalign 1.0
+    xalign 0.4
+    textalign 0.4
 
-
+style help_text:
+    xmaximum 500
+    xminimum 200
+    textalign 0.0
 
 ################################################################################
 ## Дополнительные экраны

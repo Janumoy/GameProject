@@ -17,10 +17,10 @@ default balcony_skipped = False
 
 
 # Основные персонажи
-define Mila = Character('Мила', color="#c8ffc8")
+define Mila = Character('Мила', color="#ffffff")
 
 # Второстепенные персонажи
-define Mother = Character("Мама", color="#ffffff66")
+define Mother = Character("Мама", color="#ffffff")
 define DoctorR = Character("Доктор Рэй")
 define Mihei = Character("Михей")
 define Dictor =Character("Диктор")
@@ -38,7 +38,9 @@ init python:
     renpy.music.register_channel("channel_2", mixer="sfx", loop=False)
     renpy.music.register_channel("channel_3", mixer="sfx", loop=False)
 
-    
+transform mini_position:
+    xpos 100
+    ypos 810
 
 
 
@@ -53,6 +55,9 @@ label start:
     scene 1
     play sound clock loop
     play music guel loop
+    show mini_1 at mini_position
+    
+
     "5 ОКТЯБРЯ, ПОНЕДЕЛЬНИК – «Дружба». Утро. Спальня Милы. "
     "(внутренний голос, вязко, как будто идешь через болото)"
     Mila "Восемь утра. Или восемь вечера? За окном всегда осень, так что не понять. Главное – слышать, как мама что-то делает на кухне. Когда она затихает – тогда страшно." 

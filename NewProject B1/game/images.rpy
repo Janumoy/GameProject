@@ -37,8 +37,8 @@ image 24 = Transform("images/con1/24.png", size=(1920, 1080))
 image 25 = Transform("images/con1/25.png", size=(1920, 1080))
 
 
-
-
+#МиниАрт
+image mini_1 = ("images/mila/miniart/1.png")
 
 #Анимации для главного меню
 

@@ -27,13 +27,16 @@ define gui.show_name = True
 
 ## Версия игры.
 
-define config.version = "0.0.4"
+define config.version = "0.0.5"
 
 
 ## Текст, помещённый в экран "Об игре". Поместите текст между тройными скобками.
 ## Для отделения абзацев оставляйте между ними пустую строку.
 
 define gui.about = _p("""
+Разработчик: {a=https://steamcommunity.com/id/Janumoy/}Janumoy{/a}\n
+Создано для\n 
+дипломной работы. \n
 """)
 
 
