@@ -1,11 +1,13 @@
 
 # Фон
 image bg black = Transform("images/background/black.jpg", size=(1920, 1080))
+image bg white = Transform("images/background/white.png", size=(1920, 1080))
 
 #Главное Меню
 image bg_far = Transform("images/menu/bg_far.png", size=(1920, 1080))
 image bg_mid = Transform("images/menu/bg_mid.png", size=(1920, 1080))
 image bg_near = Transform("images/menu/bg_near.png", size=(1920, 1080))
+
 
 
 #Концепт

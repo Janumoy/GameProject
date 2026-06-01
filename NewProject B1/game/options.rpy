@@ -8,6 +8,21 @@
 define audio.door = "audio/sound/door.ogg"
 define audio.guel = "audio/music/guel.ogg"
 define audio.clock = "audio/sound/clock.ogg"
+define audio.bedsheet = "audio/sound/bedsheet.ogg"
+define audio.door1 = "audio/sound/door1.ogg"
+define audio.kapli = "audio/sound/kapli.ogg"
+define audio.chairSpeak = "audio/sound/chairSpeaker.ogg"
+define audio.skripchair = "audio/sound/skripchair.ogg"
+define audio.ten = "audio/music/#10.ogg"
+define audio.whisper = "audio/sound/whisper.ogg"
+define audio.pills = "audio/sound/pills.ogg"
+define audio.eleven = "audio/music/#7.ogg"
+define audio.bormot = "audio/sound/bormot.ogg"
+define audio.shelestbumagi = "audio/sound/shelestbumagi.ogg"
+define audio.POMEXi = "audio/sound/POMEXi.ogg"
+define audio.POMEXi_1 = "audio/sound/POMEXi_1.ogg"
+define audio.POMEXi_2 = "audio/sound/POMEXi_2.ogg"
+
 
 ## Основное ####################################################################
 
@@ -16,7 +31,7 @@ define audio.clock = "audio/sound/clock.ogg"
 ##
 ## Символы "_()", окружающие название, отмечают его как пригодное для перевода.
 
-define config.name = _("NewProject B1")
+define config.name = _("")
 
 
 ## Определяет, показывать ли заголовок, данный выше, на экране главного меню.
@@ -27,7 +42,7 @@ define gui.show_name = True
 
 ## Версия игры.
 
-define config.version = "0.0.5"
+define config.version = "0.0.6"
 
 
 ## Текст, помещённый в экран "Об игре". Поместите текст между тройными скобками.
@@ -39,6 +54,7 @@ define gui.about = _p("""
 дипломной работы. \n
 """)
 
+define flash = Fade(1.0, 2.0, 0.0, color="#ffffff")
 
 ## Короткое название игры, используемое для исполняемых файлов и директорий при
 ## постройке дистрибутивов. Оно должно содержать текст формата ASCII и не должно
@@ -72,7 +88,16 @@ define test_voice = ["audio/sound/TestVoice/1.ogg"]
 ## проигрываться в главном меню. Этот файл продолжит проигрываться во время
 ## игры, если не будет остановлен, или не начнёт проигрываться другой аудиофайл.
 
-# define config.main_menu_music = "main-menu-theme.ogg"
+
+init python:
+    import random
+    ## Создаём список ваших треков
+    main_menu_playlist = ["audio/music/mainmenu/MainMenu.ogg", "audio/music/mainmenu/#3.ogg", "audio/music/mainmenu/#20.ogg", "audio/music/mainmenu/#24.ogg"]
+
+    chosen_track = random.choice(main_menu_playlist)
+    config.main_menu_music = chosen_track
+
+define config.main_menu_music = chosen_track
 
 
 ## Переходы ####################################################################
@@ -170,6 +195,7 @@ define config.window_icon = "gui/window_icon.png"
 ## проекта.
 
 init python:
+        
 
     ## Следующие функции берут образцы файлов. Образцы файлов не учитывают
     ## регистр и соответствующе зависят от директории проекта (base), с или без

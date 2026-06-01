@@ -121,6 +121,26 @@ screen say(who, what):
 
 ## Делает namebox доступным для стилизации через объект Character.
 init python:
+    style.button.activate_sound = "audio/sound/click.ogg"
+
+        # Сохраняем стандартные привязки для левой кнопки мыши
+    original_mousedown_1 = list(config.keymap.get('mousedown_1', []))
+    original_mouseup_1 = list(config.keymap.get('mouseup_1', []))
+    original_dismiss = list(config.keymap.get('dismiss', []))
+
+    # Функция для воспроизведения звука
+    def play_click_sound():
+        renpy.play("audio/sound/click.ogg", channel="sound")
+
+    # Создаем новое событие, которое будет играть звук при нажатии левой кнопки мыши
+    config.keymap['play_click_sound_on_mousedown'] = ['mousedown_1', 'K_RETURN', 'K_KP_ENTER']
+    
+    # Переназначаем исходные события, добавив к ним наше новое действие с воспроизведением звука
+    config.keymap['dismiss'] = ['mousedown_1', 'K_RETURN', 'K_KP_ENTER']
+
+
+
+
     config.character_id_prefixes.append('namebox')
 
 style window is default
@@ -366,21 +386,19 @@ screen action_overlay(next_action, anim_img, duration=1.0):
 screen main_menu():
     tag menu
 
-    add "images/menu/bg_far.png" at parallax_layer(0.3, 100) zoom 0.35 xoffset 400 yoffset 170
+    add "images/menu/bg_far.png" at parallax_layer(0.3, 100) zoom 0.37 xoffset 450 yoffset 165
     add "images/menu/bg_mid.png" at parallax_layer(0.6, 160) zoom 1.3 xoffset -40  yoffset -50
-    add "images/menu/bg_near.png" at parallax_layer(1.1, 200) zoom 0.7 xoffset -140 yoffset -50
+    add "images/menu/bg_near.png" at parallax_layer(1.1, 200) zoom 1.2 xoffset 180 yoffset -38
     add "images/menu/1.png" at parallax_layer(0.2, 100) zoom 1.5 xoffset -100 yoffset 300
+
 
     fixed at parallax_layer(0.2, 100) xoffset 100 yoffset 370:
         xalign 0.5 yalign 0.85
         vbox:
             spacing 15
-            textbutton _("Начать"):
-                action Show("action_overlay",
-                    next_action=Start(),
-                    anim_img="anim_start_frames",
-                    duration=0.6
-            )
+            textbutton _("Начать") action [ # Показать затемнение
+                Start()
+            ]
 
             textbutton _("Загрузить"):
                 action Show("action_overlay",
@@ -1691,3 +1709,18 @@ style slider_vbox:
 style slider_slider:
     variant "small"
     xsize 900
+
+
+
+# Определяем значения для стиля "A"
+define gui.dialogue_a_xpos = 270
+define gui.dialogue_a_ypos = 600
+define gui.dialogue_a_width = 740
+
+# Определяем значения для стиля "B"
+define gui.dialogue_b_xpos = 100
+define gui.dialogue_b_ypos = 50
+define gui.dialogue_b_width = 1200
+
+# Определяем переменную для переключения
+default textbox_style = "a"
