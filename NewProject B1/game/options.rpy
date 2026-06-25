@@ -36,6 +36,7 @@ define audio.doublesix = "audio/music/13.ogg"
 
 define config.name = _("")
 
+define build.itch_project = "user-name/game-name"
 
 ## Определяет, показывать ли заголовок, данный выше, на экране главного меню.
 ## Установите на False, чтобы спрятать заголовок.
