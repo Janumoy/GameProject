@@ -10,6 +10,17 @@ init offset = -2
 ## значениям, и задать высоту и ширину окна игры.
 init python:
     gui.init(1920, 1080)
+            
+    config.mouse = {
+        # Стандартный курсор
+        "default": [ (im.Scale("images/mouse.png", 16, 16), 0, 0) ],
+        # # Курсор для главного меню
+        # "mainmenu": [ ("gui/cursor_main.png", 0, 0) ],
+        # # Курсор для игрового меню
+        # "gamemenu": [ ("gui/cursor_gm.png", 0, 0) ],
+        # # Курсор при нажатой кнопке (опционально)
+        # "pressed_default": [ ("gui/cursor_click.png", 0, 0) ],
+    }    
 
 ## Включить проверку на недопустимые или нестабильные свойства в экранах или
 ## преобразованиях
@@ -28,19 +39,19 @@ define config.check_conflicting_properties = True
 define gui.accent_color = '#000000'
 
 ## Цвет, используемый в текстовой кнопке, когда она не выбрана и не наведена.
-define gui.idle_color = '#424242'
+define gui.idle_color = '#7d7d7d'
 
 ## Small_color используется в маленьком тексте, который должен быть ярче/темнее,
 ## для того, чтобы выделяться.
 define gui.idle_small_color = '#3d3d3d'
 
 ## Цвет, используемых в кнопках и панелях, когда они наведены.
-define gui.hover_color = '#888888'
+define gui.hover_color = '#dadada'
 
 ## Цвет, используемый текстовой кнопкой, когда она выбрана, но не наведена.
 ## Кнопка может быть выбрана, если это текущий экран или текущее значение
 ## настройки.
-define gui.selected_color = '#000000'
+define gui.selected_color = '#901f1f'
 
 ## Цвет, используемый текстовой кнопкой, когда она не может быть выбрана.
 define gui.insensitive_color = '#0000007f'

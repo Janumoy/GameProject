@@ -143,6 +143,18 @@ init python:
 
     config.character_id_prefixes.append('namebox')
 
+screen background_button():
+    frame:
+        background None
+        xfill True
+        yfill True
+        
+        imagebutton:
+            xpos 1200
+            ypos 430
+            idle "images/con1/button.png"
+            action SetVariable("button_tv", True)
+
 style window is default
 style say_label is default
 style say_dialogue is default

@@ -1,4 +1,8 @@
 
+
+# Видео
+image video = Movie(play="images/vidosese.webm")
+
 # Фон
 image bg black = Transform("images/background/black.jpg", size=(1920, 1080))
 image bg white = Transform("images/background/white.png", size=(1920, 1080))
@@ -37,10 +41,11 @@ image 22 = Transform("images/con1/22.png", size=(1920, 1080))
 image 23 = Transform("images/con1/23.png", size=(1920, 1080))
 image 24 = Transform("images/con1/24.png", size=(1920, 1080))
 image 25 = Transform("images/con1/25.png", size=(1920, 1080))
+image 26 = Transform("images/con1/78.png", size=(1920, 1080))
 
 
 #МиниАрт
-image mini_1 = ("images/mila/miniart/1.png")
+# image mini_1 = ("images/mila/miniart/1.png")
 
 #Анимации для главного меню
 

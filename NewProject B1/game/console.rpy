@@ -1,5 +1,5 @@
 
-default watched_variables = ["RorL", "cold", "warm", "stress", "pills_taken", "insight", "balcony_skipped"]
+default watched_variables = ["RorL", "cold", "warm", "stress", "pills_taken", "insight", "balcony_skipped", "button_tv"]
 
 init python:
     import time
